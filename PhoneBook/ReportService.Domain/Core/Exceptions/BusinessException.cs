@@ -1,12 +1,12 @@
-﻿using ContactService.Domain.Core.Extentions;
-using ContactService.Domain.Enums;
+﻿using ReportService.Domain.Core.Extentions;
+using ReportService.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactService.Domain.Exceptions
+namespace ReportService.Domain.Core.Exceptions
 {
     public class BusinessException : Exception
     {

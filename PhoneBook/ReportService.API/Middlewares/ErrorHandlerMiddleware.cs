@@ -1,9 +1,10 @@
-﻿using ContactService.Domain.Core.ResponseBases;
-using ContactService.Domain.Core.Exceptions;
+﻿
+using ReportService.Domain.Core.Exceptions;
+using ReportService.Domain.Core.ResponseBases;
 using System.Net;
 using System.Text.Json;
 
-namespace ContactService.API.Middlewares
+namespace ReportService.API.Middlewares
 {
     public class ErrorHandlerMiddleware
     {

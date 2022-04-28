@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ContactService.Domain.Core.ResponseBases;
-using ContactService.Domain.Exceptions;
+using ContactService.Domain.Core.Exceptions;
 using ContactService.Domain.Repositories;
 using ContactService.Domain.Requests;
 using ContactService.Domain.Validations;

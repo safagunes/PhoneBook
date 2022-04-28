@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactService.Domain.Exceptions
+namespace ContactService.Domain.Core.Exceptions
 {
     public class ValidationException : Exception
     {
