@@ -1,5 +1,6 @@
 ﻿using ContactService.API.Helpers;
 using ContactService.Domain.Core.ResponseBases;
+using ContactService.Domain.Dtos;
 using ContactService.Domain.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +17,33 @@ namespace ContactService.API.Controllers
         {
             _mediator = mediator;
         }
-        [HttpGet(Name = "Contacts")]
-        public async Task<ActionResult<Response>> Post(CreateContact createContact)
+        
+
+        [HttpGet("{ContactId}")]
+        public async Task<ActionResult<Response<ContactDetailDto>>> Get(GetContact request)
         {
-            var response = await _mediator.Send(createContact);
+            var response = await _mediator.Send(request);
+            return ApiResponse(response);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<PagedData<ContactDto>>>> Get(GetContacts request)
+        {
+            var response = await _mediator.Send(request);
+            return ApiResponse(response);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Response>> Post(CreateContact request)
+        {
+            var response = await _mediator.Send(request);
+            return ApiResponse(response);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<Response>> Delete(DeleteContact request)
+        {
+            var response = await _mediator.Send(request);
             return ApiResponse(response);
         }
     }

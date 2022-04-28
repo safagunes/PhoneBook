@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace ContactService.Domain.Requests
 {
-    public class CreateContact: IRequest<Response>
+    public class GetContact:IRequest<Response<ContactDetailDto>>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Company { get; set; }
+        public Guid ContactId { get; set; }
     }
 }

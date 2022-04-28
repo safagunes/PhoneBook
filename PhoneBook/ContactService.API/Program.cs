@@ -1,7 +1,13 @@
+using ContactService.API.Middlewares;
 using ContactService.Domain;
+using ContactService.Domain.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<CreateContactValidator>();
+builder.Services.AddScoped<CreateContactInfoValidator>();
+builder.Services.AddScoped<DeleteContactValidator>();
+builder.Services.AddScoped<DeleteContactInfoValidator>();
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddControllers();
@@ -21,6 +27,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.MapControllers();
 

@@ -1,5 +1,5 @@
 ﻿using ContactService.Domain.Core.ResponseBases;
-using ContactService.Domain.Dtos;
+using ContactService.Domain.Enums;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace ContactService.Domain.Requests
 {
-    public class CreateContact: IRequest<Response>
+    public class CreateContactInfo : IRequest<Response>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Company { get; set; }
+        public Guid ContactId { get; set; }
+        public ContactInfoType Type { get; set; }
+        public string Content { get; set; }
     }
 }

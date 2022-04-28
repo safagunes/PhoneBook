@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ContactService.Domain.Dtos;
 using ContactService.Domain.Models;
 using ContactService.Domain.Requests;
 using System;
@@ -15,6 +16,20 @@ namespace ContactService.Domain
         {
             CreateMap<CreateContact, Contact>();
             CreateMap<Contact, CreateContact>();
+
+            CreateMap<CreateContactInfo, ContactInfo>();
+            CreateMap<ContactInfo, CreateContactInfo>();
+
+            CreateMap<ContactDetailDto, Contact>();
+            CreateMap<Contact, ContactDetailDto>();
+
+            CreateMap<ContactDto, Contact>();
+            CreateMap<Contact, ContactDto>();
+
+            CreateMap<ContactInfoDto, ContactInfo>();
+            CreateMap<ContactInfo, ContactInfoDto>();
+
+
         }
     }
 }
