@@ -13,6 +13,6 @@ namespace ContactService.Domain.Dtos
         public string LastName { get; set; }
         public string Company { get; set; }
 
-        public IEnumerable<ContactDetailDto> ContactInfos { get; set; }
+        public IEnumerable<ContactInfoDetailDto> ContactInfos { get; set; }
     }
 }

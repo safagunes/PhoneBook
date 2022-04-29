@@ -20,14 +20,19 @@ namespace ContactService.Domain
             CreateMap<CreateContactInfo, ContactInfo>();
             CreateMap<ContactInfo, CreateContactInfo>();
 
-            CreateMap<ContactDetailDto, Contact>();
-            CreateMap<Contact, ContactDetailDto>();
+            CreateMap<ContactInfoDetailDto, ContactInfo>();
+            CreateMap<ContactInfo, ContactInfoDetailDto>();
+
+            CreateMap<ContactDetailDto, Contact>();//.ForMember(d => d.ContactInfos, opt => opt.MapFrom(s => s.ContactInfos));
+            CreateMap<Contact, ContactDetailDto>();//.ForMember(d => d.ContactInfos, opt => opt.MapFrom(s => s.ContactInfos)); 
 
             CreateMap<ContactDto, Contact>();
             CreateMap<Contact, ContactDto>();
 
             CreateMap<ContactInfoDto, ContactInfo>();
             CreateMap<ContactInfo, ContactInfoDto>();
+
+            
 
 
         }

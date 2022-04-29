@@ -10,6 +10,7 @@ namespace ContactService.API.Controllers
 {
     
     [Route("api/v1/[controller]")]
+    [ApiController]
     public class ContactController : BaseController
     {
         private readonly IMediator _mediator;
@@ -20,14 +21,14 @@ namespace ContactService.API.Controllers
         
 
         [HttpGet("{ContactId}")]
-        public async Task<ActionResult<Response<ContactDetailDto>>> Get(GetContact request)
+        public async Task<ActionResult<Response<ContactDetailDto>>> Get([FromRoute]GetContact request)
         {
             var response = await _mediator.Send(request);
             return ApiResponse(response);
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response<PagedData<ContactDto>>>> Get(GetContacts request)
+        public async Task<ActionResult<Response<PagedData<ContactDto>>>> Get([FromQuery] GetContacts request)
         {
             var response = await _mediator.Send(request);
             return ApiResponse(response);

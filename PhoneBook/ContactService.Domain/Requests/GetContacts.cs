@@ -13,8 +13,8 @@ namespace ContactService.Domain.Requests
     {
         public override string OrderBy { get; set; } = "Id";
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Company { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Company { get; set; }
     }
 }

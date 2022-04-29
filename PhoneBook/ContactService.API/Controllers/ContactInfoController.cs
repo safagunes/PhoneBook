@@ -8,6 +8,7 @@ namespace ContactService.API.Controllers
 {
     
     [Route("api/v1/[controller]")]
+    [ApiController]
     public class ContactInfoController : BaseController
     {
         private readonly IMediator _mediator;

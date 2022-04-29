@@ -37,6 +37,17 @@ namespace ContactService.API.Middlewares
                         };
 
                         break;
+                    case BusinessException e:
+                        httpResponse.StatusCode = e.Code;
+                        response = new ResponseOfException
+                        {
+                            Code = e.Code,
+                            Message = e.Message,
+                            Description =e.InnerException?.Message,
+                            Success = false
+                        };
+
+                        break;
                     default:
 
                         httpResponse.StatusCode = (int)HttpStatusCode.InternalServerError;

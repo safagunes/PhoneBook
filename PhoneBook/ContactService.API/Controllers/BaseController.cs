@@ -7,7 +7,7 @@ namespace ContactService.API.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiConventionType(typeof(CustomApiConventions))]
-    [ApiController]
+ 
     public class BaseController : ControllerBase
     {
         public ObjectResult ApiResponse(Response response)
