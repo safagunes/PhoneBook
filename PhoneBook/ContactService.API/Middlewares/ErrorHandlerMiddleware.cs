@@ -48,6 +48,7 @@ namespace ContactService.API.Middlewares
                         };
 
                         break;
+
                     default:
 
                         httpResponse.StatusCode = (int)HttpStatusCode.InternalServerError;

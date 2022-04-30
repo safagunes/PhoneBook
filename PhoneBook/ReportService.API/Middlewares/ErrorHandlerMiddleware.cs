@@ -36,7 +36,26 @@ namespace ReportService.API.Middlewares
                             Code = httpResponse.StatusCode,
                             ValidationErrors = e.ValidationErrors
                         };
-
+                        break;
+                    case BusinessException e:
+                        httpResponse.StatusCode = e.Code;
+                        response = new ResponseOfException
+                        {
+                            Code = e.Code,
+                            Message = e.Message,
+                            Description = e.InnerException?.Message,
+                            Success = false
+                        };
+                        break;
+                    case ServiceException e:
+                        httpResponse.StatusCode = e.Code;
+                        response = new ResponseOfException
+                        {
+                            Code = e.Code,
+                            Message = e.Message,
+                            Description = e.InnerException?.Message,
+                            Success = false
+                        };
                         break;
                     default:
 

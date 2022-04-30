@@ -7,21 +7,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContactService", "ContactSe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReportService", "ReportService", "{76EDCA58-AA51-4231-80E5-307AD896381D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactService.Domain", "ContactService.Domain\ContactService.Domain.csproj", "{1A749124-E5B6-4217-9025-4F0540182E50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactService.Domain", "ContactService.Domain\ContactService.Domain.csproj", "{1A749124-E5B6-4217-9025-4F0540182E50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactService.Infrastructure", "ContactService.Infrastructure\ContactService.Infrastructure.csproj", "{5F853AD5-2BDD-4121-BF67-4C2943F9240C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactService.Infrastructure", "ContactService.Infrastructure\ContactService.Infrastructure.csproj", "{5F853AD5-2BDD-4121-BF67-4C2943F9240C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactService.API", "ContactService.API\ContactService.API.csproj", "{02E6B042-8B59-4362-805A-8CD3C4231732}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactService.API", "ContactService.API\ContactService.API.csproj", "{02E6B042-8B59-4362-805A-8CD3C4231732}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.Domain", "ReportService.Domain\ReportService.Domain.csproj", "{87FDF8CA-9B62-4F70-957D-705305B47C96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportService.Domain", "ReportService.Domain\ReportService.Domain.csproj", "{87FDF8CA-9B62-4F70-957D-705305B47C96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.Infrastructure", "ReportService.Infrastructure\ReportService.Infrastructure.csproj", "{367127D7-7F7E-4FB6-8486-E4FC242766AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportService.Infrastructure", "ReportService.Infrastructure\ReportService.Infrastructure.csproj", "{367127D7-7F7E-4FB6-8486-E4FC242766AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.API", "ReportService.API\ReportService.API.csproj", "{CBF52C00-2E91-482B-BB5F-C8DCE5879E5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportService.API", "ReportService.API\ReportService.API.csproj", "{CBF52C00-2E91-482B-BB5F-C8DCE5879E5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactService.Test", "ContactService.Test\ContactService.Test.csproj", "{9D29B35E-7F52-4BEA-BAAD-366982C171DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactService.Test", "ContactService.Test\ContactService.Test.csproj", "{9D29B35E-7F52-4BEA-BAAD-366982C171DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.Test", "ReportService.Test\ReportService.Test.csproj", "{DECA0459-30E9-4FCF-B576-0BC15058DED7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportService.Test", "ReportService.Test\ReportService.Test.csproj", "{DECA0459-30E9-4FCF-B576-0BC15058DED7}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{72E57CEB-1903-4EAE-A36D-BBE423A5C876}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{DECA0459-30E9-4FCF-B576-0BC15058DED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DECA0459-30E9-4FCF-B576-0BC15058DED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DECA0459-30E9-4FCF-B576-0BC15058DED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E57CEB-1903-4EAE-A36D-BBE423A5C876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E57CEB-1903-4EAE-A36D-BBE423A5C876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E57CEB-1903-4EAE-A36D-BBE423A5C876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E57CEB-1903-4EAE-A36D-BBE423A5C876}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,5 +49,13 @@ namespace ReportService.Infrastructure.Repositories.EF
         {
             return await _context.Reports.Include(a=>a.ReportDetail).FirstOrDefaultAsync(a => a.Id == reportId);
         }
+
+        public async Task<Report> UpdateAsync(Report entity)
+        {
+            var updatedEntity = _context.Entry(entity);
+            updatedEntity.State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return entity;
+        }
     }
 }

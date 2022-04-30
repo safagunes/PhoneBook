@@ -11,6 +11,7 @@ namespace ReportService.Domain.Repositories
     public interface IReportRepository
     {
         Task<Report> AddAsync(Report entity);
+        Task<Report> UpdateAsync(Report entity);
         Task<IEnumerable<Report>> GetAsync(GetReports request);
         Task<Report> GetAsync(Guid reportId);
         Task<int> CountAsync(GetReports request);

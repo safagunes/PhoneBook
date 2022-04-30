@@ -19,8 +19,9 @@ namespace ReportService.Infrastructure.Bus.RabbitMQ
         private readonly IMediator _mediator;
 
         
-        public RabbitMQSubscriber(RabbitMQClientService rabbitMQClientService)
+        public RabbitMQSubscriber(RabbitMQClientService rabbitMQClientService, IMediator mediator)
         {
+            _mediator = mediator;
             _rabbitMQClientService = rabbitMQClientService;
             _channel = _rabbitMQClientService.Connect();
             _channel.BasicQos(0, 1, false);

@@ -28,8 +28,8 @@ namespace ReportService.Infrastructure.Services.Contact
         {
             try
             {
-                var querystring = GetQueryString(request);  
-                var httpResponseMessage = await _httpClient.GetAsync($"/contact?{querystring}");
+ 
+                var httpResponseMessage = await _httpClient.GetAsync($"/v1/contact/{request.ContactId}");
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
                     using var errorStream = await httpResponseMessage.Content.ReadAsStreamAsync();
@@ -43,7 +43,7 @@ namespace ReportService.Infrastructure.Services.Contact
             }
             catch (Exception ex)
             {
-                throw new Exception("GetContactDetailAsync Error.", ex);
+                throw new Exception("ContactDetail Get Error.", ex);
             }
         }
 
@@ -52,7 +52,7 @@ namespace ReportService.Infrastructure.Services.Contact
             try
             {
                 var querystring = GetQueryString(request);
-                var httpResponseMessage = await _httpClient.GetAsync($"/contact?{querystring}");
+                var httpResponseMessage = await _httpClient.GetAsync($"/v1/contact?{querystring}");
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
                     using var errorStream = await httpResponseMessage.Content.ReadAsStreamAsync();
@@ -66,7 +66,7 @@ namespace ReportService.Infrastructure.Services.Contact
             }
             catch (Exception ex)
             {
-                throw new Exception("GetContactsAsync Error.", ex);
+                throw new Exception("Contacts Get Error.", ex);
             }
         }
         private string GetQueryString(object obj)

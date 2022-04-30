@@ -8,8 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["ContactService.API/ContactService.API.csproj", "ContactService.API/"]
-COPY ["ContactService.Domain/ContactService.Domain.csproj", "ContactService.Domain/"]
-COPY ["ContactService.Infrastructure/ContactService.Infrastructure.csproj", "ContactService.Infrastructure/"]
 RUN dotnet restore "ContactService.API/ContactService.API.csproj"
 COPY . .
 WORKDIR "/src/ContactService.API"
