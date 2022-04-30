@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactService.Domain.Core.Extentions
+namespace ReportService.Domain.Core.Extentions
 {
     public static class LambdaExtentions
     {

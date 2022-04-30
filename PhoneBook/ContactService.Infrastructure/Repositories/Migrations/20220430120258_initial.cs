@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ContactService.Infrastructure.PostgreSql.Migrations
+namespace ContactService.Infrastructure.Repositories.Migrations
 {
     public partial class initial : Migration
     {

@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactService.Infrastructure.PostgreSql.Repositories
+namespace ContactService.Infrastructure.Repositories.EF
 {
-    public class PGContactInfoRepository : IContactInfoRepository
+    public class EFContactInfoRepository : IContactInfoRepository
     {
         private readonly EFContext _context;
-        public PGContactInfoRepository(EFContext context)
+        public EFContactInfoRepository(EFContext context)
         {
             _context = context;
         }

@@ -1,5 +1,5 @@
-﻿using ContactService.Domain.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ReportService.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,19 +8,19 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactService.Infrastructure.PostgreSql
+namespace ReportService.Infrastructure.Data.EF
 {
     public class EFContext : DbContext
     {
         public EFContext(DbContextOptions<EFContext> options) : base(options) { }
 
 
-        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
-        public DbSet<ContactInfo> ContactInfos { get; set; }
-        
+        public DbSet<ReportDetail> ReportDetails { get; set; }
 
-        private readonly string schemaName = "contactdb";
+
+        private readonly string schemaName = "reportdb";
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Şemayı belirtmek için kullanılır.

@@ -11,12 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ContactService.Infrastructure.PostgreSql.Repositories
+namespace ContactService.Infrastructure.Repositories.EF
 {
-    public class PGContactRepository : IContactRepository
+    public class EFContactRepository : IContactRepository
     {
         private readonly EFContext _context;
-        public PGContactRepository(EFContext context)
+        public EFContactRepository(EFContext context)
         {
             _context = context;
         }
@@ -32,11 +32,11 @@ namespace ContactService.Infrastructure.PostgreSql.Repositories
             var queryable = _context.Contacts.AsQueryable();
 
             if (!string.IsNullOrEmpty(request.FirstName))
-                queryable = queryable.Where(a => a.FirstName.ToLowerInvariant().Contains(request.FirstName.ToLowerInvariant()));
+                queryable = queryable.Where(a => a.FirstName.ToLower().Contains(request.FirstName.ToLower()));
             if (!string.IsNullOrEmpty(request.LastName))
-                queryable = queryable.Where(a => a.LastName.ToLowerInvariant().Contains(request.LastName.ToLowerInvariant()));
+                queryable = queryable.Where(a => a.LastName.ToLower().Contains(request.LastName.ToLower()));
             if (!string.IsNullOrEmpty(request.Company))
-                queryable = queryable.Where(a => a.Company.ToLowerInvariant().Contains(request.Company.ToLowerInvariant()));
+                queryable = queryable.Where(a => a.Company.ToLower().Contains(request.Company.ToLower()));
 
             return await queryable.CountAsync();
         }
@@ -61,11 +61,11 @@ namespace ContactService.Infrastructure.PostgreSql.Repositories
             var queryable = _context.Contacts.AsQueryable();
 
             if (!string.IsNullOrEmpty(request.FirstName))
-                queryable = queryable.Where(a => a.FirstName.ToLowerInvariant().Contains(request.FirstName.ToLowerInvariant()));
+                queryable = queryable.Where(a => a.FirstName.ToLower().Contains(request.FirstName.ToLower()));
             if (!string.IsNullOrEmpty(request.LastName))
-                queryable = queryable.Where(a => a.LastName.ToLowerInvariant().Contains(request.LastName.ToLowerInvariant()));
+                queryable = queryable.Where(a => a.LastName.ToLower().Contains(request.LastName.ToLower()));
             if (!string.IsNullOrEmpty(request.Company))
-                queryable = queryable.Where(a => a.Company.ToLowerInvariant().Contains(request.Company.ToLowerInvariant()));
+                queryable = queryable.Where(a => a.Company.ToLower().Contains(request.Company.ToLower()));
 
             return await queryable.OrderBy(request.OrderBy, request.IsAscending)
                                   .Skip(request.PageIndex.Value* request.PageSize.Value)
