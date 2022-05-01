@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using ReportService.Domain.Bus;
@@ -15,14 +16,15 @@ namespace ReportService.Infrastructure.Bus.RabbitMQ
 {
     public class RabbitMQSubscriber : IBusSubscriber
     {
+        private readonly ILogger<RabbitMQSubscriber> _logger;
         private readonly RabbitMQClientService _rabbitMQClientService;
-        private readonly IModel _channel;
-        
+        private readonly IModel _channel;        
         private readonly IServiceProvider _serviceProvider;
 
         
-        public RabbitMQSubscriber(RabbitMQClientService rabbitMQClientService, IServiceProvider serviceProvider)
+        public RabbitMQSubscriber(RabbitMQClientService rabbitMQClientService, IServiceProvider serviceProvider, ILogger<RabbitMQSubscriber> logger)
         {
+            _logger = logger;
             _serviceProvider = serviceProvider;
             _rabbitMQClientService = rabbitMQClientService;
             _channel = _rabbitMQClientService.Connect();
@@ -52,7 +54,7 @@ namespace ReportService.Infrastructure.Bus.RabbitMQ
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Burası loglanacak
+                    _logger.LogError($"RabbitMQ Subscriber Exception:{ex.Message}");
                 }
                 
             };

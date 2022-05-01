@@ -10,7 +10,6 @@ using ReportService.Domain.Services.Contact.Dtos;
 using ReportService.Domain.Services.Contact.Enums;
 using ReportService.Domain.Services.Contact.Requests;
 using ReportService.Domain.Services.ExcelExport;
-using ReportService.Domain.Services.File;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -27,21 +26,18 @@ namespace ReportService.Domain.Handlers
         private readonly IReportDetailRepository _reportDetailRepository;
         private readonly IContactService _contactService;
         private readonly IExcelExportService _excelExportService;
-        private readonly IFileService _fileService;
         public ProcessReportHandler(
             IUnitOfWork unitOfWork,
             IReportRepository reportRepository,
             IReportDetailRepository reportDetailRepository,
             IContactService contactService,
-            IExcelExportService excelExportService,
-            IFileService fileService)
+            IExcelExportService excelExportService)
         {
             _unitOfWork = unitOfWork;
             _reportRepository = reportRepository;
             _reportDetailRepository = reportDetailRepository;
             _contactService = contactService;
             _excelExportService = excelExportService;
-            _fileService = fileService;
         }
         public async Task<Unit> Handle(ProcessReport request, CancellationToken cancellationToken)
         {
@@ -71,12 +67,11 @@ namespace ReportService.Domain.Handlers
                     PhoneNumberCount = contactDetails.SelectMany(a => a.ContactInfos.Where(a => a.Type == ContactInfoType.PhoneNumber).Select(a => a)).Count()
                 };
 
-                var datatable = contactDetails.ToList().ToDataTable();
+                var datatable = new List<ReportDetail> { reportDetail }.ToDataTable();
 
-                var content = _excelExportService.Export(datatable);
+                _excelExportService.Export(datatable, $"PhoneBook-{request.ReportId}-{DateTime.Now:yyyy-MM-dd}.xlsx");
 
-                await _fileService.SaveAsync($"PhoneBook-{request.ReportId}-{DateTime.Now:yyyy-MM-dd}", ".xlsx", content);
-                await _unitOfWork.StartTransactionAsync();
+                //await _unitOfWork.StartTransactionAsync();
                 await _reportDetailRepository.AddAsync(reportDetail);
 
                 var report = await _reportRepository.GetAsync(request.ReportId);
@@ -86,7 +81,7 @@ namespace ReportService.Domain.Handlers
                 }
 
                 await _reportRepository.UpdateAsync(report);
-                await _unitOfWork.CommitTransactionAsync();
+                //await _unitOfWork.CommitTransactionAsync();
             }
             return await Task.FromResult(Unit.Value);
         }

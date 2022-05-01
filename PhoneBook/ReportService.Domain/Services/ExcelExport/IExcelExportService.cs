@@ -9,6 +9,6 @@ namespace ReportService.Domain.Services.ExcelExport
 {
     public interface IExcelExportService
     {
-        Stream Export(DataTable table);
+        void Export(DataTable table, string fileName);
     }
 }

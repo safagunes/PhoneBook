@@ -8,7 +8,6 @@ using ReportService.Domain.Handlers;
 using ReportService.Domain.Repositories;
 using ReportService.Domain.Services;
 using ReportService.Domain.Services.ExcelExport;
-using ReportService.Domain.Services.File;
 using ReportService.Domain.Validations;
 using ReportService.Domain.WorkerServices;
 using ReportService.Infrastructure.Bus.RabbitMQ;
@@ -16,7 +15,6 @@ using ReportService.Infrastructure.Data.EF;
 using ReportService.Infrastructure.Repositories.EF;
 using ReportService.Infrastructure.Services.Contact;
 using ReportService.Infrastructure.Services.ExcelExport;
-using ReportService.Infrastructure.Services.File;
 using System.Globalization;
 
 namespace ReportService.API.Extentions
@@ -43,7 +41,6 @@ namespace ReportService.API.Extentions
 
             services.AddSingleton<IContactService, ContactService>();
             services.AddScoped<IExcelExportService, ClosedXMLExcelExportService>();
-            services.AddScoped<IFileService, LocalFileService>();
 
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             services.AddScoped<IReportDetailRepository, EFReportDetailRepository>();

@@ -11,15 +11,14 @@ namespace ReportService.Infrastructure.Services.ExcelExport
 {
     public class ClosedXMLExcelExportService : IExcelExportService
     {
-        public Stream Export(DataTable table)
+        public void Export(DataTable table, string fileName)
         {
-            using var ms = new MemoryStream();
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/files", fileName);
             var wb = new XLWorkbook();
             var ds = new DataSet();
             ds.Tables.Add(table);
             wb.Worksheets.Add(ds);
-            wb.SaveAs(ms);
-            return ms;
+            wb.SaveAs(path);
         }
     }
 }
