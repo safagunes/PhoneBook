@@ -19,16 +19,19 @@ namespace ReportService.Domain.Handlers
     public class CreateReportHandler : IRequestHandler<CreateReport, Response>
     {
         private readonly IBusPublisher _busPublisher;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IReportRepository _reportRepository;
         private readonly CreateReportValidator _createReportValidator;
 
         public CreateReportHandler(
             IBusPublisher busPublisher,
+            IUnitOfWork unitOfWork,
             IReportRepository reportRepository,
             CreateReportValidator createReportValidator,
         IMapper mapper)
         {
             _busPublisher = busPublisher;
+            _unitOfWork = unitOfWork;
             _reportRepository = reportRepository;
             _createReportValidator = createReportValidator;
         }
@@ -45,7 +48,7 @@ namespace ReportService.Domain.Handlers
                 validate.Errors.GroupBy(a => a.PropertyName).ToList().ForEach(a => validations.Add(a.Key, a.Select(b => b.ErrorMessage).ToList()));
                 throw new ValidationException(validations);
             }
-
+            await _unitOfWork.StartTransactionAsync();
             var report = await _reportRepository.AddAsync(new Report
             {
                 RequestDate = DateTime.Now,
@@ -56,6 +59,7 @@ namespace ReportService.Domain.Handlers
                 ReportId = report.Id,
                 Location = request.Location
             }); 
+            await _unitOfWork.CommitTransactionAsync();
             return await Task.FromResult(response);
         }
     }

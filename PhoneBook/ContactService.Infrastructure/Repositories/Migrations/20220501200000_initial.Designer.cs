@@ -12,14 +12,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ContactService.Infrastructure.Repositories.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20220430120258_initial")]
+    [Migration("20220501200000_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("contactdb")
+                .HasDefaultSchema("public")
                 .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -49,7 +49,7 @@ namespace ContactService.Infrastructure.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("contacts", "contactdb");
+                    b.ToTable("contacts", "public");
                 });
 
             modelBuilder.Entity("ContactService.Domain.Models.ContactInfo", b =>
@@ -76,7 +76,7 @@ namespace ContactService.Infrastructure.Repositories.Migrations
 
                     b.HasIndex("ContactId");
 
-                    b.ToTable("contactinfos", "contactdb");
+                    b.ToTable("contactinfos", "public");
                 });
 
             modelBuilder.Entity("ContactService.Domain.Models.ContactInfo", b =>

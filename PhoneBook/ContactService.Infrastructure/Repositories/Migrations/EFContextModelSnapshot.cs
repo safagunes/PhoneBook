@@ -17,7 +17,7 @@ namespace ContactService.Infrastructure.Repositories.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("contactdb")
+                .HasDefaultSchema("public")
                 .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -47,7 +47,7 @@ namespace ContactService.Infrastructure.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("contacts", "contactdb");
+                    b.ToTable("contacts", "public");
                 });
 
             modelBuilder.Entity("ContactService.Domain.Models.ContactInfo", b =>
@@ -74,7 +74,7 @@ namespace ContactService.Infrastructure.Repositories.Migrations
 
                     b.HasIndex("ContactId");
 
-                    b.ToTable("contactinfos", "contactdb");
+                    b.ToTable("contactinfos", "public");
                 });
 
             modelBuilder.Entity("ContactService.Domain.Models.ContactInfo", b =>

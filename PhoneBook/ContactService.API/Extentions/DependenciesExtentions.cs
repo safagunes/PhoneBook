@@ -24,6 +24,7 @@ namespace ContactService.API.Extentions
             services.AddAutoMapper(typeof(MappingProfile));
 
 
+            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             services.AddScoped<IContactRepository, EFContactRepository>();
             services.AddScoped<IContactInfoRepository, EFContactInfoRepository>();
 

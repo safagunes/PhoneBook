@@ -22,18 +22,21 @@ namespace ReportService.Domain.Handlers
 {
     public class ProcessReportHandler : IRequestHandler<ProcessReport, Unit>
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IReportRepository _reportRepository;
         private readonly IReportDetailRepository _reportDetailRepository;
         private readonly IContactService _contactService;
         private readonly IExcelExportService _excelExportService;
         private readonly IFileService _fileService;
         public ProcessReportHandler(
+            IUnitOfWork unitOfWork,
             IReportRepository reportRepository,
             IReportDetailRepository reportDetailRepository,
             IContactService contactService,
             IExcelExportService excelExportService,
             IFileService fileService)
         {
+            _unitOfWork = unitOfWork;
             _reportRepository = reportRepository;
             _reportDetailRepository = reportDetailRepository;
             _contactService = contactService;
@@ -73,7 +76,7 @@ namespace ReportService.Domain.Handlers
                 var content = _excelExportService.Export(datatable);
 
                 await _fileService.SaveAsync($"PhoneBook-{request.ReportId}-{DateTime.Now:yyyy-MM-dd}", ".xlsx", content);
-
+                await _unitOfWork.StartTransactionAsync();
                 await _reportDetailRepository.AddAsync(reportDetail);
 
                 var report = await _reportRepository.GetAsync(request.ReportId);
@@ -83,6 +86,7 @@ namespace ReportService.Domain.Handlers
                 }
 
                 await _reportRepository.UpdateAsync(report);
+                await _unitOfWork.CommitTransactionAsync();
             }
             return await Task.FromResult(Unit.Value);
         }

@@ -45,6 +45,7 @@ namespace ReportService.API.Extentions
             services.AddScoped<IExcelExportService, ClosedXMLExcelExportService>();
             services.AddScoped<IFileService, LocalFileService>();
 
+            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             services.AddScoped<IReportDetailRepository, EFReportDetailRepository>();
             services.AddScoped<IReportRepository, EFReportRepository>();
 

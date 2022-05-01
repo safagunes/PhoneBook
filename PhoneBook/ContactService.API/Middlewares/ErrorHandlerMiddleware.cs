@@ -49,6 +49,17 @@ namespace ContactService.API.Middlewares
                         };
 
                         break;
+                    case TransactionException e:
+                        httpResponse.StatusCode = e.Code;
+                        response = new ResponseOfException
+                        {
+                            Code = e.Code,
+                            Message = e.Message,
+                            Description = e.InnerException?.Message,
+                            Success = false
+                        };
+
+                        break;
 
                     default:
 

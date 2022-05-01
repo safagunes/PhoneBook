@@ -24,13 +24,14 @@ namespace ReportService.Test.Handlers
         private readonly Mock<IReportRepository> mockRepo;
         private readonly CreateReportValidator _createReportValidator;
         private readonly Mock<IBusPublisher> _busPublisher;
-
+        private readonly Mock<IUnitOfWork> _unitOfWork;
 
         public CreateReportHandlerTest()
         {
 
             mockRepo = MockReportRepository.GetReportRepository();
             _busPublisher = new Mock<IBusPublisher>();
+            _unitOfWork = new Mock<IUnitOfWork>();
             _createReportValidator = new CreateReportValidator();
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -41,7 +42,7 @@ namespace ReportService.Test.Handlers
         [Fact]
         public async Task Create_Report()
         {
-            var handler = new CreateReportHandler(_busPublisher.Object, mockRepo.Object, _createReportValidator, _mapper);
+            var handler = new CreateReportHandler(_busPublisher.Object, _unitOfWork.Object, mockRepo.Object, _createReportValidator, _mapper);
             var result = await handler.Handle(new CreateReport
             {
                 Location="istanbul"
@@ -53,7 +54,7 @@ namespace ReportService.Test.Handlers
         [Fact]
         public async Task Create_Report_ThrowsValidationException()
         {
-            var handler = new CreateReportHandler(_busPublisher.Object, mockRepo.Object, _createReportValidator, _mapper);
+            var handler = new CreateReportHandler(_busPublisher.Object, _unitOfWork.Object, mockRepo.Object, _createReportValidator, _mapper);
 
             Func<Task> act = () => handler.Handle(new CreateReport
             {
