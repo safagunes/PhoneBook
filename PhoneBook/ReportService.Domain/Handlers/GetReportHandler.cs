@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ReportService.Domain.Handlers
 {
-    public class GetReportHandler : IRequestHandler<GetReport, Response<ReportDetailDto>>
+    public class GetReportHandler : IRequestHandler<GetReport, Response<ReportDto>>
     {
         private readonly IReportRepository _reportRepository;
         private readonly IMapper _mapper;
@@ -24,16 +24,16 @@ namespace ReportService.Domain.Handlers
             _mapper = mapper;
         }
 
-        public async Task<Response<ReportDetailDto>> Handle(GetReport request, CancellationToken cancellationToken)
+        public async Task<Response<ReportDto>> Handle(GetReport request, CancellationToken cancellationToken)
         {
-            var response = new Response<ReportDetailDto>();
+            var response = new Response<ReportDto>();
 
-            var contact = await _reportRepository.GetAsync(request.ReportId);
+            var report = await _reportRepository.GetAsync(request.ReportId);
 
-            if (contact == null)
+            if (report == null)
                 throw new BusinessException(ErrorMessage.NotFound);
 
-            response.Data = _mapper.Map<ReportDetailDto>(contact);
+            response.Data = _mapper.Map<ReportDto>(report);
             return response;
         }
     }

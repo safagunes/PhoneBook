@@ -12,5 +12,7 @@ namespace ReportService.Domain.Dtos
         public Guid Id { get; set; }
         public DateTime RequestDate { get; set; }
         public ReportStatus Status { get; set; }
+        public ReportDetailDto ReportDetail { get; set; }
+       
     }
 }

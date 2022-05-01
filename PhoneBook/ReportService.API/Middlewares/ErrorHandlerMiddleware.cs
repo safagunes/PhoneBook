@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using ReportService.Domain.Core.Exceptions;
 using ReportService.Domain.Core.ResponseBases;
 using System.Net;
@@ -68,7 +69,7 @@ namespace ReportService.API.Middlewares
                         };
                         break;
                 }
-                await httpResponse.WriteAsync(JsonSerializer.Serialize(response));
+                await httpResponse.WriteAsync(JsonConvert.SerializeObject(response));
             }
         }
     }

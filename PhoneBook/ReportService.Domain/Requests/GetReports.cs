@@ -12,6 +12,6 @@ namespace ReportService.Domain.Requests
     public class GetReports : PagedQuery, IRequest<Response<PagedData<ReportDto>>>
     {
         public override string OrderBy { get; set; } = "Id";
-        public string Location { get; set; }
+        public string? Location { get; set; }
     }
 }

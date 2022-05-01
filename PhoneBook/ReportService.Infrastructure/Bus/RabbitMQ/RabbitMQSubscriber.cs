@@ -52,7 +52,7 @@ namespace ReportService.Infrastructure.Bus.RabbitMQ
                 }
                 catch (Exception ex)
                 {
-
+                    //TODO: Burası loglanacak
                 }
                 
             };

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ReportService.Domain.Requests
 {
-    public class GetReport : IRequest<Response<ReportDetailDto>>
+    public class GetReport : IRequest<Response<ReportDto>>
     {
         public Guid ReportId { get; set; }
     }

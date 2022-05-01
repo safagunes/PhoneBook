@@ -11,8 +11,8 @@ namespace ContactService.Domain.Requests
 {
     public class CreateContact: IRequest<Response>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Company { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Company { get; set; }
     }
 }

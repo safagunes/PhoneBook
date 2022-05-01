@@ -2,6 +2,7 @@
 using ContactService.Domain.Core.Exceptions;
 using System.Net;
 using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace ContactService.API.Middlewares
 {
@@ -60,7 +61,7 @@ namespace ContactService.API.Middlewares
                         };
                         break;
                 }
-                await httpResponse.WriteAsync(JsonSerializer.Serialize(response));
+                await httpResponse.WriteAsync(JsonConvert.SerializeObject(response));
             }
         }
     }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ReportService.API.Extentions;
+using ReportService.API.Middlewares;
 using ReportService.Domain;
 using ReportService.Domain.Validations;
 using ReportService.Domain.WorkerServices;
@@ -43,6 +44,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.MapControllers();
 

@@ -18,7 +18,7 @@ namespace ReportService.API.Controllers
 
 
         [HttpGet("{ReportId}")]
-        public async Task<ActionResult<Response<ReportDetailDto>>> Get([FromRoute] GetReport request)
+        public async Task<ActionResult<Response<ReportDto>>> Get([FromRoute] GetReport request)
         {
             var response = await _mediator.Send(request);
             return ApiResponse(response);

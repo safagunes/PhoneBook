@@ -10,6 +10,6 @@ namespace ReportService.Domain.Requests
 {
     public class CreateReport:IRequest<Response>
     {
-        public string Location { get; set; }
+        public string? Location { get; set; }
     }
 }
