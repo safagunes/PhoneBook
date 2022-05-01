@@ -29,6 +29,11 @@ namespace ReportService.Infrastructure.Repositories.EF
         public async Task<int> CountAsync(GetReports request)
         {
             var queryable = _context.Reports.AsQueryable();
+            if (!string.IsNullOrEmpty(request.Location))
+            {
+                queryable = queryable.Where(a => a.ReportDetail != null);
+                queryable = queryable.Where(a => a.ReportDetail.Location.ToLower().Contains(request.Location.ToLower()));
+            }
             return await queryable.CountAsync();
         }
 
@@ -40,6 +45,11 @@ namespace ReportService.Infrastructure.Repositories.EF
         public async Task<IEnumerable<Report>> GetAsync(GetReports request)
         {
             var queryable = _context.Reports.AsQueryable();
+            if (!string.IsNullOrEmpty(request.Location))
+            {
+                queryable = queryable.Where(a => a.ReportDetail != null);
+                queryable = queryable.Where(a => a.ReportDetail.Location.ToLower().Contains(request.Location.ToLower()));
+            }
             return await queryable.OrderBy(request.OrderBy, request.IsAscending)
                                   .Skip(request.PageIndex.Value * request.PageSize.Value)
                                   .Take(request.PageSize.Value).ToListAsync();
@@ -47,7 +57,7 @@ namespace ReportService.Infrastructure.Repositories.EF
 
         public async Task<Report> GetAsync(Guid reportId)
         {
-            return await _context.Reports.Include(a=>a.ReportDetail).FirstOrDefaultAsync(a => a.Id == reportId);
+            return await _context.Reports.Include(a => a.ReportDetail).FirstOrDefaultAsync(a => a.Id == reportId);
         }
 
         public async Task<Report> UpdateAsync(Report entity)

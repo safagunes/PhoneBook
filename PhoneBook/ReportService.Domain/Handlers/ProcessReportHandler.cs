@@ -81,6 +81,8 @@ namespace ReportService.Domain.Handlers
                 {
                     report.Status = ReportStatus.Done;
                 }
+
+                await _reportRepository.UpdateAsync(report);
             }
             return await Task.FromResult(Unit.Value);
         }
