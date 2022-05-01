@@ -13,7 +13,8 @@ namespace ReportService.Domain.WorkerServices
     public class CreateReportWorkerService : BackgroundService
     {
         private readonly IBusSubscriber _busSubscriber;
-        
+
+
         public CreateReportWorkerService(IBusSubscriber busSubscriber)
         {
             _busSubscriber = busSubscriber;
@@ -21,11 +22,7 @@ namespace ReportService.Domain.WorkerServices
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                await Task.Delay(5000);
-                await _busSubscriber.SubscribeAsync<ProcessReport>();
-            }
+            await _busSubscriber.SubscribeAsync<ProcessReport>();
         }
     }
 }

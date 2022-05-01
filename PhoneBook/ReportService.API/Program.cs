@@ -1,7 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using ReportService.API.Extentions;
 using ReportService.Domain;
 using ReportService.Domain.Validations;
 using ReportService.Domain.WorkerServices;
+using ReportService.Infrastructure.Data.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var context = services.GetRequiredService<EFContext>();
+        context.Database.Migrate(); // apply all migrations
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred seeding the DB.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

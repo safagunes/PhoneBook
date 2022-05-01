@@ -19,26 +19,28 @@ namespace ReportService.Infrastructure.Services.Contact
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly HttpClient _httpClient;
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
         public ContactService(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
             _httpClient = _httpClientFactory.CreateClient("contactservice");
+            _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         }
         public async Task<ContactDetailDto> GetContactDetailAsync(GetContact request)
         {
             try
             {
  
-                var httpResponseMessage = await _httpClient.GetAsync($"/v1/contact/{request.ContactId}");
-                if (httpResponseMessage.IsSuccessStatusCode)
+                var httpResponseMessage = await _httpClient.GetAsync($"/api/v1/contact/{request.ContactId}");
+                if (!httpResponseMessage.IsSuccessStatusCode)
                 {
-                    using var errorStream = await httpResponseMessage.Content.ReadAsStreamAsync();
-                    var ex = await JsonSerializer.DeserializeAsync<ResponseOfException>(errorStream);
+                    var errormessage = await httpResponseMessage.Content.ReadAsStringAsync();
+                    var ex = JsonSerializer.Deserialize<ResponseOfException>(errormessage, _jsonSerializerOptions);
                     throw new ServiceException(ex.Code, ex.Message);
                 }
 
-                using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
-                var contentResponse = await JsonSerializer.DeserializeAsync<Response<ContactDetailDto>>(contentStream);
+                var content = await httpResponseMessage.Content.ReadAsStringAsync();
+                var contentResponse =  JsonSerializer.Deserialize<Response<ContactDetailDto>>(content, _jsonSerializerOptions);
                 return contentResponse.Data;
             }
             catch (Exception ex)
@@ -52,16 +54,16 @@ namespace ReportService.Infrastructure.Services.Contact
             try
             {
                 var querystring = GetQueryString(request);
-                var httpResponseMessage = await _httpClient.GetAsync($"/v1/contact?{querystring}");
-                if (httpResponseMessage.IsSuccessStatusCode)
+                var httpResponseMessage = await _httpClient.GetAsync($"/api/v1/contact?{querystring}");
+                if (!httpResponseMessage.IsSuccessStatusCode)
                 {
-                    using var errorStream = await httpResponseMessage.Content.ReadAsStreamAsync();
-                    var ex = await JsonSerializer.DeserializeAsync<ResponseOfException>(errorStream);
+                    var errormessage = await httpResponseMessage.Content.ReadAsStringAsync();
+                    var ex = JsonSerializer.Deserialize<ResponseOfException>(errormessage, _jsonSerializerOptions);
                     throw new ServiceException(ex.Code, ex.Message);
                 }
 
-                using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
-                var contentResponse = await JsonSerializer.DeserializeAsync<Response<PagedData<ContactDto>>>(contentStream);
+                var content = await httpResponseMessage.Content.ReadAsStringAsync();
+                var contentResponse =  JsonSerializer.Deserialize<Response<PagedData<ContactDto>>>(content, _jsonSerializerOptions);
                 return contentResponse.Data.Items;
             }
             catch (Exception ex)

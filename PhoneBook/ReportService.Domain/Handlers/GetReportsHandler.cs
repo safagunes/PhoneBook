@@ -27,20 +27,15 @@ namespace ReportService.Domain.Handlers
         {
 
             var response = new Response<PagedData<ReportDto>>();
-            var contacts = await _reportRepository.GetAsync(request);
-            if (contacts == null || contacts.Count() == 0)
+            var reports = await _reportRepository.GetAsync(request);
+
+            response.Data = new PagedData<ReportDto>
             {
-                throw new BusinessException(ErrorMessage.NotFound);
-            }
-            else
-            {
-                response.Data = new PagedData<ReportDto>
-                {
-                    Items = _mapper.Map<IEnumerable<ReportDto>>(contacts),
-                    Count = await _reportRepository.CountAsync(request),
-                    TotalCount = await _reportRepository.CountAsync()
-                };
-            }
+                Items = _mapper.Map<IEnumerable<ReportDto>>(reports),
+                Count = await _reportRepository.CountAsync(request),
+                TotalCount = await _reportRepository.CountAsync()
+            };
+
             return response;
         }
     }

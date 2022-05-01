@@ -19,14 +19,9 @@ namespace ReportService.Infrastructure.Data.EF
 
         public DbSet<ReportDetail> ReportDetails { get; set; }
 
-
-        private readonly string schemaName = "reportdb";
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Şemayı belirtmek için kullanılır.
-
-            modelBuilder.HasDefaultSchema(schemaName);
-
+            modelBuilder.HasDefaultSchema("public");
             //Tüm map dosyalarını configurasyona ekler.
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
@@ -41,7 +36,7 @@ namespace ReportService.Infrastructure.Data.EF
                 .SelectMany(e => e.GetProperties())
                 .ToList()
                 .ForEach(p => p.SetColumnName(p.Name.ToLower(new CultureInfo("en-US", false))));
-            #endregion,
+            #endregion
 
             base.OnModelCreating(modelBuilder);
         }

@@ -17,6 +17,7 @@ using ReportService.Infrastructure.Repositories.EF;
 using ReportService.Infrastructure.Services.Contact;
 using ReportService.Infrastructure.Services.ExcelExport;
 using ReportService.Infrastructure.Services.File;
+using System.Globalization;
 
 namespace ReportService.API.Extentions
 {
@@ -25,10 +26,10 @@ namespace ReportService.API.Extentions
         public static IServiceCollection AddDependencies(this IServiceCollection services,IConfiguration configuration)
         {
             services.AddDbContext<EFContext>(options =>
-                //options.UseNpgsql(builder.Configuration.GetConnectionString("EFContext"), x => x.MigrationsHistoryTable("__EFMigrationsHistory".ToLower(new CultureInfo("en-US", false)), "contactdb"))
-                options.UseInMemoryDatabase(databaseName: "reportdb"));
+                //options.UseNpgsql(configuration.GetConnectionString("EFContext"), x => x.MigrationsHistoryTable("__EFMigrationsHistory".ToLower(new CultureInfo("en-US", false)), "public"))
+                options.UseInMemoryDatabase(databaseName: "reportdb")
+                );
 
-            var dd = configuration.GetConnectionString("RabbitMQ");
             services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(configuration.GetConnectionString("RabbitMQ")), DispatchConsumersAsync = true });
 
             services.AddSingleton<RabbitMQClientService>();
@@ -40,7 +41,7 @@ namespace ReportService.API.Extentions
 
             services.AddMediatR(typeof(CreateReportHandler), typeof(GetReportHandler), typeof(GetReportsHandler), typeof(ProcessReportHandler));
 
-            services.AddScoped<IContactService, ContactService>();
+            services.AddSingleton<IContactService, ContactService>();
             services.AddScoped<IExcelExportService, ClosedXMLExcelExportService>();
             services.AddScoped<IFileService, LocalFileService>();
 
@@ -55,12 +56,13 @@ namespace ReportService.API.Extentions
             {
                 c.BaseAddress = new Uri(configuration["Services:Contact"]);
                 c.Timeout = TimeSpan.FromMinutes(1);
-
-            }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
             {
                 ClientCertificateOptions = ClientCertificateOption.Manual,
                 ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) => { return true; }
-            }).AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromSeconds(30)));
+            })
+            .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromSeconds(30)));
 
 
             return services;

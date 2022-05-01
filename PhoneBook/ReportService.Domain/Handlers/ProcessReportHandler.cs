@@ -72,7 +72,7 @@ namespace ReportService.Domain.Handlers
 
                 var content = _excelExportService.Export(datatable);
 
-                await _fileService.SaveAsync($"PhoneBook-{request.ReportId}-{DateTime.Now.ToShortDateString()}", ".xlsx", content);
+                await _fileService.SaveAsync($"PhoneBook-{request.ReportId}-{DateTime.Now:yyyy-MM-dd}", ".xlsx", content);
 
                 await _reportDetailRepository.AddAsync(reportDetail);
 

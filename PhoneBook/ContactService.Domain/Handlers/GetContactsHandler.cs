@@ -29,19 +29,12 @@ namespace ContactService.Domain.Handlers
         {
             var response = new Response<PagedData<ContactDto>>();
             var contacts = await _contactRepository.GetAsync(request);
-            if (contacts == null || contacts.Count() == 0)
+            response.Data = new PagedData<ContactDto>
             {
-                throw new BusinessException(ErrorMessage.NotFound);
-            }
-            else
-            {
-                response.Data = new PagedData<ContactDto>
-                {
-                    Items = _mapper.Map<IEnumerable<ContactDto>>(contacts),
-                    Count = await _contactRepository.CountAsync(request),
-                    TotalCount = await _contactRepository.CountAsync()
-                };
-            }
+                Items = _mapper.Map<IEnumerable<ContactDto>>(contacts),
+                Count = await _contactRepository.CountAsync(request),
+                TotalCount = await _contactRepository.CountAsync()
+            };
             return response;
         }
     }

@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   reportservice.api:
+    container_name: reportservice
     image: ${DOCKER_REGISTRY-}reportserviceapi
     build:
       context: .
@@ -10,8 +11,11 @@ services:
     depends_on:
       rabbit:
         condition: service_healthy
+    networks:
+      - phone-book
 
   contactservice.api:
+    container_name: contactservice
     image: ${DOCKER_REGISTRY-}contactserviceapi
     build:
       context: .
@@ -20,6 +24,8 @@ services:
     depends_on:
       rabbit:
         condition: service_healthy
+    networks:
+      - phone-book
 
   rabbit:
     image: rabbitmq:3-management-alpine
@@ -37,3 +43,39 @@ services:
       - RABBITMQ_DEFAULT_VHOST=CUSTOM_HOST
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - phone-book
+  contactdb:
+    container_name: contactdb
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - phone-book
+    volumes: 
+      - contactdb:/var/lib/postgresql/data
+  reportdb:
+    container_name: reportdb
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5433:5432'
+    networks:
+      - phone-book
+    volumes: 
+      - reportdb:/var/lib/postgresql/data
+volumes:
+  contactdb:
+    driver: local
+  reportdb:
+    driver: local
+
+networks:
+  phone-book:

@@ -9,6 +9,6 @@ namespace ReportService.Domain.Bus
 {
     public interface IBusSubscriber
     {
-        Task SubscribeAsync<T>() where T : class, new();
+        Task SubscribeAsync<T>();
     }
 }

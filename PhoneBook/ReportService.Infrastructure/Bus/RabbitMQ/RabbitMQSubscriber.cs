@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using ReportService.Domain.Bus;
@@ -16,30 +17,45 @@ namespace ReportService.Infrastructure.Bus.RabbitMQ
     {
         private readonly RabbitMQClientService _rabbitMQClientService;
         private readonly IModel _channel;
-        private readonly IMediator _mediator;
+        
+        private readonly IServiceProvider _serviceProvider;
 
         
-        public RabbitMQSubscriber(RabbitMQClientService rabbitMQClientService, IMediator mediator)
+        public RabbitMQSubscriber(RabbitMQClientService rabbitMQClientService, IServiceProvider serviceProvider)
         {
-            _mediator = mediator;
+            _serviceProvider = serviceProvider;
             _rabbitMQClientService = rabbitMQClientService;
             _channel = _rabbitMQClientService.Connect();
             _channel.BasicQos(0, 1, false);
 
         }
 
-        public async Task SubscribeAsync<T>() where T : class, new()
+        public async Task SubscribeAsync<T>()
         {
-            var t = new T();
             var consumer = new AsyncEventingBasicConsumer(_channel);
+            _channel.BasicConsume(queue: RabbitMQClientService.Queue,
+                                 autoAck: false,
+                                 consumer: consumer);
             consumer.Received += async (model, ea) =>
             {
-                t = JsonSerializer.Deserialize<T>(Encoding.UTF8.GetString(ea.Body.ToArray()));
-                await _mediator.Send(t);
+                try
+                {
+                    await Task.Delay(5000);
+                    var t = JsonSerializer.Deserialize<T>(Encoding.UTF8.GetString(ea.Body.ToArray()));
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var mediator = scope.ServiceProvider.GetService<IMediator>();
+                        await mediator.Send(t);
+                    }
+
+                    _channel.BasicAck(ea.DeliveryTag, false);
+                }
+                catch (Exception ex)
+                {
+
+                }
+                
             };
-            _channel.BasicConsume(queue: RabbitMQClientService.Queue,
-                                 autoAck: true,
-                                 consumer: consumer);
         }
     }
 }

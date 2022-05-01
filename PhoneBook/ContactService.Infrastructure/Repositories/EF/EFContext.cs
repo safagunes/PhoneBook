@@ -19,13 +19,11 @@ namespace ContactService.Infrastructure.Repositories.EF
 
         public DbSet<ContactInfo> ContactInfos { get; set; }
         
-
-        private readonly string schemaName = "contactdb";
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Şemayı belirtmek için kullanılır.
 
-            modelBuilder.HasDefaultSchema(schemaName);
+            modelBuilder.HasDefaultSchema("public");
 
             //Tüm map dosyalarını configurasyona ekler.
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -41,7 +39,7 @@ namespace ContactService.Infrastructure.Repositories.EF
                 .SelectMany(e => e.GetProperties())
                 .ToList()
                 .ForEach(p => p.SetColumnName(p.Name.ToLower(new CultureInfo("en-US", false))));
-            #endregion,
+            #endregion
 
             base.OnModelCreating(modelBuilder);
         }
