@@ -11,8 +11,8 @@ namespace ContactService.Domain.Requests
 {
     public class CreateContactInfo : IRequest<Response>
     {
-        public Guid ContactId { get; set; }
-        public ContactInfoType Type { get; set; }
-        public string Content { get; set; }
+        public Guid? ContactId { get; set; }
+        public ContactInfoType? Type { get; set; }
+        public string? Content { get; set; }
     }
 }

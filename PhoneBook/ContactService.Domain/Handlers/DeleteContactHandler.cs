@@ -17,15 +17,12 @@ namespace ContactService.Domain.Handlers
     {
         private readonly IContactRepository _contactRepository;
         private readonly DeleteContactValidator _deleteContactValidator;
-        private readonly IMapper _mapper;
         public DeleteContactHandler(
             IContactRepository contactRepository,
-            DeleteContactValidator deleteContactValidator,
-            IMapper mapper)
+            DeleteContactValidator deleteContactValidator)
         {
             _contactRepository = contactRepository;
             _deleteContactValidator = deleteContactValidator;
-            _mapper = mapper;
         }
         public async Task<Response> Handle(DeleteContact request, CancellationToken cancellationToken)
         {
@@ -40,7 +37,7 @@ namespace ContactService.Domain.Handlers
                 validate.Errors.GroupBy(a => a.PropertyName).ToList().ForEach(a => validations.Add(a.Key, a.Select(b => b.ErrorMessage).ToList()));
                 throw new ValidationException(validations);
             }
-            await _contactRepository.DeleteAsync(request.ContactId);
+            await _contactRepository.DeleteAsync(request.ContactId.Value);
             return response;
         }
     }

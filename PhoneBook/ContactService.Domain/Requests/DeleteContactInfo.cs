@@ -10,6 +10,6 @@ namespace ContactService.Domain.Requests
 {
     public class DeleteContactInfo : IRequest<Response>
     {
-        public Guid ContactInfoId { get; set; }
+        public Guid? ContactInfoId { get; set; }
     }
 }

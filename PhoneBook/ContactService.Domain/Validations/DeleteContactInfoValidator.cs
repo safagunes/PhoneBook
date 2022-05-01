@@ -10,6 +10,9 @@ namespace ContactService.Domain.Validations
 {
     public class DeleteContactInfoValidator : AbstractValidator<DeleteContactInfo>
     {
-
+        public DeleteContactInfoValidator()
+        {
+            RuleFor(x => x.ContactInfoId).NotNull().WithMessage("ContactInfoId is required");
+        }
     }
 }

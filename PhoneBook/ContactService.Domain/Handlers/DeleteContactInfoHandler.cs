@@ -40,7 +40,7 @@ namespace ContactService.Domain.Handlers
                 validate.Errors.GroupBy(a => a.PropertyName).ToList().ForEach(a => validations.Add(a.Key, a.Select(b => b.ErrorMessage).ToList()));
                 throw new ValidationException(validations);
             }
-            await _contactInfoRepository.DeleteAsync(request.ContactInfoId);
+            await _contactInfoRepository.DeleteAsync(request.ContactInfoId.Value);
             return response;
         }
     }
