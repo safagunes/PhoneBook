@@ -21,7 +21,7 @@ namespace ReportService.Infrastructure.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("public");
+            modelBuilder.HasDefaultSchema("reportdb");
             //Tüm map dosyalarını configurasyona ekler.
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 

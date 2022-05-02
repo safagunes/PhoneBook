@@ -17,7 +17,7 @@ namespace ReportService.Infrastructure.Repositories.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("public")
+                .HasDefaultSchema("reportdb")
                 .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -40,7 +40,7 @@ namespace ReportService.Infrastructure.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("reports", "public");
+                    b.ToTable("reports", "reportdb");
                 });
 
             modelBuilder.Entity("ReportService.Domain.Models.ReportDetail", b =>
@@ -64,7 +64,7 @@ namespace ReportService.Infrastructure.Repositories.Migrations
 
                     b.HasKey("ReportId");
 
-                    b.ToTable("reportdetails", "public");
+                    b.ToTable("reportdetails", "reportdb");
                 });
 
             modelBuilder.Entity("ReportService.Domain.Models.ReportDetail", b =>

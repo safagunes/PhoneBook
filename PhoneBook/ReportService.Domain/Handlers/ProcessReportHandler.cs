@@ -71,7 +71,7 @@ namespace ReportService.Domain.Handlers
 
                 _excelExportService.Export(datatable, $"PhoneBook-{request.ReportId}-{DateTime.Now:yyyy-MM-dd}.xlsx");
 
-                //await _unitOfWork.StartTransactionAsync();
+                await _unitOfWork.StartTransactionAsync();
                 await _reportDetailRepository.AddAsync(reportDetail);
 
                 var report = await _reportRepository.GetAsync(request.ReportId);
@@ -81,7 +81,7 @@ namespace ReportService.Domain.Handlers
                 }
 
                 await _reportRepository.UpdateAsync(report);
-                //await _unitOfWork.CommitTransactionAsync();
+                await _unitOfWork.CommitTransactionAsync();
             }
             return await Task.FromResult(Unit.Value);
         }

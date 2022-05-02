@@ -23,7 +23,7 @@ namespace ContactService.Infrastructure.Repositories.EF
         {
             //Şemayı belirtmek için kullanılır.
 
-            modelBuilder.HasDefaultSchema("public");
+            modelBuilder.HasDefaultSchema("contactdb");
 
             //Tüm map dosyalarını configurasyona ekler.
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

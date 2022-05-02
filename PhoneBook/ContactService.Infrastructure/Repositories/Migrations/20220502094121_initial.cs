@@ -10,11 +10,11 @@ namespace ContactService.Infrastructure.Repositories.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "public");
+                name: "contactdb");
 
             migrationBuilder.CreateTable(
                 name: "contacts",
-                schema: "public",
+                schema: "contactdb",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -29,7 +29,7 @@ namespace ContactService.Infrastructure.Repositories.Migrations
 
             migrationBuilder.CreateTable(
                 name: "contactinfos",
-                schema: "public",
+                schema: "contactdb",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -43,7 +43,7 @@ namespace ContactService.Infrastructure.Repositories.Migrations
                     table.ForeignKey(
                         name: "FK_contactinfos_contacts_contactid",
                         column: x => x.contactid,
-                        principalSchema: "public",
+                        principalSchema: "contactdb",
                         principalTable: "contacts",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -51,7 +51,7 @@ namespace ContactService.Infrastructure.Repositories.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_contactinfos_contactid",
-                schema: "public",
+                schema: "contactdb",
                 table: "contactinfos",
                 column: "contactid");
         }
@@ -60,11 +60,11 @@ namespace ContactService.Infrastructure.Repositories.Migrations
         {
             migrationBuilder.DropTable(
                 name: "contactinfos",
-                schema: "public");
+                schema: "contactdb");
 
             migrationBuilder.DropTable(
                 name: "contacts",
-                schema: "public");
+                schema: "contactdb");
         }
     }
 }

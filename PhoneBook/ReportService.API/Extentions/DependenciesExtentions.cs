@@ -24,8 +24,8 @@ namespace ReportService.API.Extentions
         public static IServiceCollection AddDependencies(this IServiceCollection services,IConfiguration configuration)
         {
             services.AddDbContext<EFContext>(options =>
-                //options.UseNpgsql(configuration.GetConnectionString("EFContext"), x => x.MigrationsHistoryTable("__EFMigrationsHistory".ToLower(new CultureInfo("en-US", false)), "public"))
-                options.UseInMemoryDatabase(databaseName: "reportdb")
+                options.UseNpgsql(configuration.GetConnectionString("EFContext"), x => x.MigrationsHistoryTable("__EFMigrationsHistory".ToLower(new CultureInfo("en-US", false)), "reportdb"))
+                //options.UseInMemoryDatabase(databaseName: "reportdb")
                 );
 
             services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(configuration.GetConnectionString("RabbitMQ")), DispatchConsumersAsync = true });

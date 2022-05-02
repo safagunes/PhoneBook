@@ -48,7 +48,7 @@ namespace ReportService.Domain.Handlers
                 validate.Errors.GroupBy(a => a.PropertyName).ToList().ForEach(a => validations.Add(a.Key, a.Select(b => b.ErrorMessage).ToList()));
                 throw new ValidationException(validations);
             }
-            //await _unitOfWork.StartTransactionAsync();
+            await _unitOfWork.StartTransactionAsync();
             var report = await _reportRepository.AddAsync(new Report
             {
                 RequestDate = DateTime.Now,
@@ -60,7 +60,7 @@ namespace ReportService.Domain.Handlers
                 Location = request.Location
             }); 
             
-            //await _unitOfWork.CommitTransactionAsync();
+            await _unitOfWork.CommitTransactionAsync();
             return await Task.FromResult(response);
         }
     }

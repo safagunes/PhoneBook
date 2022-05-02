@@ -45,9 +45,9 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     networks:
       - phone-book
-  contactdb:
-    container_name: contactdb
-    image: postgres:14.1-alpine
+  postgresqldb:
+    container_name: postgresqldb
+    image: postgres:14
     restart: always
     environment:
       - POSTGRES_USER=postgres
@@ -57,24 +57,9 @@ services:
     networks:
       - phone-book
     volumes: 
-      - contactdb:/var/lib/postgresql/data
-  reportdb:
-    container_name: reportdb
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - '5433:5432'
-    networks:
-      - phone-book
-    volumes: 
-      - reportdb:/var/lib/postgresql/data
+      - postgresqldb:/var/lib/postgresql/data
 volumes:
-  contactdb:
-    driver: local
-  reportdb:
+  postgresqldb:
     driver: local
 
 networks:

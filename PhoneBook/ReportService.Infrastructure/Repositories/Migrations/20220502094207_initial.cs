@@ -10,11 +10,11 @@ namespace ReportService.Infrastructure.Repositories.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "public");
+                name: "reportdb");
 
             migrationBuilder.CreateTable(
                 name: "reports",
-                schema: "public",
+                schema: "reportdb",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -28,7 +28,7 @@ namespace ReportService.Infrastructure.Repositories.Migrations
 
             migrationBuilder.CreateTable(
                 name: "reportdetails",
-                schema: "public",
+                schema: "reportdb",
                 columns: table => new
                 {
                     reportid = table.Column<Guid>(type: "uuid", nullable: false),
@@ -42,7 +42,7 @@ namespace ReportService.Infrastructure.Repositories.Migrations
                     table.ForeignKey(
                         name: "FK_reportdetails_reports_reportid",
                         column: x => x.reportid,
-                        principalSchema: "public",
+                        principalSchema: "reportdb",
                         principalTable: "reports",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -53,11 +53,11 @@ namespace ReportService.Infrastructure.Repositories.Migrations
         {
             migrationBuilder.DropTable(
                 name: "reportdetails",
-                schema: "public");
+                schema: "reportdb");
 
             migrationBuilder.DropTable(
                 name: "reports",
-                schema: "public");
+                schema: "reportdb");
         }
     }
 }

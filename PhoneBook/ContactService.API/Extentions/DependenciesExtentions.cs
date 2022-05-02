@@ -14,8 +14,8 @@ namespace ContactService.API.Extentions
         public static IServiceCollection AddDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<EFContext>(options =>
-                //options.UseNpgsql(configuration.GetConnectionString("EFContext"), x => x.MigrationsHistoryTable("__EFMigrationsHistory".ToLower(new CultureInfo("en-US", false)),"public"))
-                options.UseInMemoryDatabase(databaseName: "contactdb")
+                options.UseNpgsql(configuration.GetConnectionString("EFContext"), x => x.MigrationsHistoryTable("__EFMigrationsHistory".ToLower(new CultureInfo("en-US", false)),"contactdb"))
+                //options.UseInMemoryDatabase(databaseName: "contactdb")
                 );
 
             //builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
